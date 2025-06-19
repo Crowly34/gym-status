@@ -1,9 +1,15 @@
 <x-layouts.app :title="__('Dashboard')">
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
         <div class="grid gap-6 lg:grid-cols-3">
-            <x-dashboard.kpi-card title="🏋️ Total Reports" :value="$reportsCount" />
-            <x-dashboard.kpi-card title="🎵 Song Suggestions" :value="$suggestionsCount" />
-            <x-dashboard.kpi-card title="⏱️ Last Update" :value="$lastUpdated->diffForHumans()" />
+            <x-dashboard.kpi-card :value="$reportsCount">
+                🏋️ Total Reports
+            </x-dashboard.kpi-card>
+            <x-dashboard.kpi-card :value="$suggestionsCount">
+                🎵 Song Suggestions
+            </x-dashboard.kpi-card>
+            <x-dashboard.kpi-card :value="$lastUpdated->diffForHumans()">
+                ⏱️ Last Update
+            </x-dashboard.kpi-card>
         </div>
 
         <div class="grid auto-rows-min gap-4 md:grid-cols-2">
