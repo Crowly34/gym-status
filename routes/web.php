@@ -9,8 +9,19 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->name('dashboard');
+Route::get('dashboard', function () {
+    $reportsCount     = \App\Models\Report::count();
+    $suggestionsCount = \App\Models\SongSuggestion::count();
+    $lastUpdated      = \App\Models\Report::latest()->first()?->created_at
+        ?? \App\Models\SongSuggestion::latest()->first()?->created_at
+        ?? now();
+
+    return view('dashboard', [
+        'reportsCount'     => $reportsCount,
+        'suggestionsCount' => $suggestionsCount,
+        'lastUpdated'      => $lastUpdated,
+    ]);
+})->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
