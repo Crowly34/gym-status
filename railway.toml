@@ -1,41 +1,24 @@
-[tool.nixpacks]
-enable = true
+# railway.toml
 
-# ─────────── Setup Phase ───────────
-[[tool.nixpacks.phases.setup]]
-commands = [
-  # install PHP deps
-  "composer install --ignore-platform-reqs --no-interaction --prefer-dist --optimize-autoloader",
-  # install JS deps
-  "npm ci"
-]
+[build]
+# Uno de: "NIXPACKS" | "DOCKERFILE" | "RAILPACK" | "HEROKU" | "PAKETO"
+builder      = "NIXPACKS"
+# El comando que corre tu script de build (assets y limpieza local)
+buildCommand = "chmod +x build-app.sh && sh ./build-app.sh"
 
-# ─────────── Build Phase ───────────
-[[tool.nixpacks.phases.build]]
-commands = [
-  # clear any locally cached config so we don’t bake in HTTP URLs
+[deploy]
+# Comandos que necesitan acceso a la base de datos antes de levantar la app
+preDeployCommand = [
   "php artisan config:clear",
-  "php artisan route:clear",
-  "php artisan view:clear",
-  # build your Vite assets
-  "npm run build"
-]
-
-# ────────── Optimize Phase ──────────
-# By default Nixpacks would run 'php artisan optimize:clear' which hits the DB.
-# We replace it with a *no-DB* cache step:
-[[tool.nixpacks.phases.optimize]]
-commands = [
-  # only cache files, routes & views (no DB calls)
+  "php artisan migrate --force",
   "php artisan config:cache",
   "php artisan route:cache",
   "php artisan view:cache"
 ]
+# Comando para arrancar tu servidor en $PORT
+startCommand     = "php artisan serve --host=0.0.0.0 --port=$PORT"
 
-# ─────────── Start Phase ───────────
-[[tool.nixpacks.phases.start]]
-commands = [
-  # run your migrations & then serve on $PORT
-  "php artisan migrate --force",
-  "php artisan serve --host=0.0.0.0 --port=$PORT"
-]
+# Opcional: ruta de healthcheck, timeout y política de reinicio
+healthcheckPath    = "/"
+healthcheckTimeout = 30
+restartPolicyType  = "ON_FAILURE"
