@@ -2,13 +2,28 @@
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
         <div class="grid gap-6 lg:grid-cols-3">
             <x-dashboard.kpi-card :value="$reportsCount">
-<flux:icon.dumbbell  class="aspect-square size-14 text-amber-500 dark:text-amber-300 mx-auto" />
+                <x-slot:icon>
+                    <flux:icon.dumbbell  class="aspect-square size-14 text-amber-500 dark:text-amber-300 mx-auto" />
+                </x-slot:icon>
+                <x-slot:title>
+                    {{ __('messages.Reports') }}
+                </x-slot:title>
             </x-dashboard.kpi-card>
             <x-dashboard.kpi-card :value="$suggestionsCount">
-<flux:icon.exclamation-triangle variant="outline" class="aspect-square size-14 text-amber-500 dark:text-amber-300 mx-auto" />
+                <x-slot:icon>
+                    <flux:icon.drum class="aspect-square size-14 text-amber-500 dark:text-amber-300 mx-auto" />
+                </x-slot:icon>
+                <x-slot:title>
+                    {{ __('messages.Song suggestions') }}
+                </x-slot:title>
             </x-dashboard.kpi-card>
             <x-dashboard.kpi-card :value="$lastUpdated->diffForHumans()">
-<flux:icon.clock variant="outline" class="aspect-square size-14 text-amber-500 dark:text-amber-300 mx-auto" />
+                <x-slot:icon>
+                    <flux:icon.clock variant="outline" class="aspect-square size-14 text-amber-500 dark:text-amber-300 mx-auto" />
+                </x-slot:icon>
+                <x-slot:title>
+                    {{ __('messages.Last updated') }}
+                </x-slot:title>
             </x-dashboard.kpi-card>
         </div>
 
