@@ -2,13 +2,13 @@
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
         <div class="grid gap-6 lg:grid-cols-3">
             <x-dashboard.kpi-card :value="$reportsCount">
-                🏋️ Total Reports
+<flux:icon.dumbbell  class="aspect-square size-14 text-amber-500 dark:text-amber-300 mx-auto" />
             </x-dashboard.kpi-card>
             <x-dashboard.kpi-card :value="$suggestionsCount">
-                🎵 Song Suggestions
+<flux:icon.exclamation-triangle variant="outline" class="aspect-square size-14 text-amber-500 dark:text-amber-300 mx-auto" />
             </x-dashboard.kpi-card>
             <x-dashboard.kpi-card :value="$lastUpdated->diffForHumans()">
-                ⏱️ Last Update
+<flux:icon.clock variant="outline" class="aspect-square size-14 text-amber-500 dark:text-amber-300 mx-auto" />
             </x-dashboard.kpi-card>
         </div>
 
