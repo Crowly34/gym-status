@@ -1,24 +1,15 @@
 # railway.toml
 
 [build]
-# Uno de: "NIXPACKS" | "DOCKERFILE" | "RAILPACK" | "HEROKU" | "PAKETO"
 builder      = "NIXPACKS"
-# El comando que corre tu script de build (assets y limpieza local)
 buildCommand = "chmod +x build-app.sh && sh ./build-app.sh"
 
 [deploy]
-# Comandos que necesitan acceso a la base de datos antes de levantar la app
+# Aquí va un solo string con todos los pasos
 preDeployCommand = [
-  "php artisan config:clear",
-  "php artisan migrate --force",
-  "php artisan config:cache",
-  "php artisan route:cache",
-  "php artisan view:cache"
+  "php artisan config:clear && php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache"
 ]
-# Comando para arrancar tu servidor en $PORT
-startCommand     = "php artisan serve --host=0.0.0.0 --port=$PORT"
-
-# Opcional: ruta de healthcheck, timeout y política de reinicio
+startCommand = "php artisan serve --host=0.0.0.0 --port=$PORT"
 healthcheckPath    = "/"
 healthcheckTimeout = 30
 restartPolicyType  = "ON_FAILURE"
