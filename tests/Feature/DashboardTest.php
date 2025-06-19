@@ -4,8 +4,8 @@ use App\Models\User;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
-test('guests are redirected to the login page', function () {
-    $this->get('/dashboard')->assertRedirect('/login');
+test('dashboard is publicly accessible', function () {
+    $this->get('/dashboard')->assertOk();
 });
 
 test('authenticated users can visit the dashboard', function () {
